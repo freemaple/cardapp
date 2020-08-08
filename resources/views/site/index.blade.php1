@@ -1,0 +1,132 @@
+@extends('layouts.app')
+
+@section('styles')
+<style type="text/css">
+    body {
+        background: #f5f5f5;
+    }
+    .layer-homescreen-box .layerbox-wrapper {
+        max-width: 90%;
+        width: 440px;
+        margin: auto;
+    }
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    .tipHeader {
+        font-size: 0.3rem;
+        color: #fe5430;
+        padding: 0px 0px 10px 0px;
+    }
+</style>
+@endsection
+
+@section('header')
+<div class="mobile-header clearfix">
+    <div class="mobile-header-box clearfix">
+        <div class="site-header-box clearfix">
+            <form action="{{ Helper::route('search') }}">
+                <div class="search-box">
+                    <span class="mark">
+                        <i class="iconfont icon-search"></i>
+                    </span>
+                    <input type="text" class="flex pub-input" name="keyword" placeholder="请输入商品名称搜索" />
+                </div>
+                <input type="submit" class="app" value="搜索" style="color: #fff;padding: 5px 12px" />
+            </form>
+        </div>
+        <img class="lazyload" data-img="/media/images/h.png" style="width: 100%" />
+    </div>
+</div>
+@endsection
+
+@section('content')
+
+@if(!empty($banners))
+<div class="swiper-container">
+    <ul class="swiper-wrapper">
+        @foreach($banners as $bkey => $b)
+        <li class="swiper-slide"><a title="{{ $b['alt'] or '' }}" href="{{ $b['url'] or '' }}"><img class="banner-image" src="{{ HelperImage::storagePath($b['image']) }}" alt="{{ $b['alt'] or '' }}"></a></li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+<div style="background-color: #ffffff">
+    <a href="{{ Helper::route('shop') }}"><img class="lazyload" data-img="{{ Helper::asset_url('/media/images/self_g.gif') }}" style="width: 100%" /></a>
+</div>
+
+<div class="site-i clearfix" style="padding-bottom: 20px;">
+    <span class="site-i-item" style="padding-left: 10px">
+        <a href="{{ Helper::route('article') }}">
+            <div class="site-i-box" style="width: 80px;">
+                <img src="{{ Helper::asset_url('/media/images/article.png') }}" width="80" />
+                <span class="text wtext">文库</span>
+            </div>
+        </a>
+    </span>
+    <span class="site-i-item">
+        <a href="{{ Helper::route('merchant') }}">
+            <div class="site-i-box" style="width: 80px;">
+                <img src="{{ Helper::asset_url('/media/images/merchant.png') }}" width="80" />
+                <span class="text mtext">同城商家</span>
+            </div>
+        </a>
+    </span>
+</div>
+
+@if(count($products) > 0)
+<div class="site-pro">
+    <div class="site-pro-header"><img class="lazyload" data-img="{{ Helper::asset_url('/media/images/spc.png') }}" style="width: 100%" /></div>
+    <ul class="site-pro-list clearfix" style="width: 100%;overflow-x: auto;height: ">
+        @foreach($products as $pkey => $product)
+        <li>
+            <div class="item-box">
+                <a href="{{ Helper::route('product_view', $product['id']) }}">
+                    <div class="img lazy">
+                        <img class="lazyload" data-img="{{ $product['image'] or '' }}" />
+                    </div>
+                    <div class="price">￥{{ $product['sku']['price'] or '' }}</div>
+                    @if($product['sku']['market_price'] > 0)
+                    <div class="sprice">￥{{ $product['sku']['market_price'] or '' }}</div>
+                    @endif
+                </a>
+            </div>
+        </li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+<div style="position: relative;"> 
+    <img class="lazyload" data-img="{{ Helper::asset_url('/media/images/bcate.png') }}" style="width: 100%;position: absolute;width: 100%;
+    position: absolute;top: -12px;max-height: 60px;z-index: 2" />
+    <div class="site-cate-nav home-cate-nav">
+        <ul>
+            <li><a  href="{{ Helper::route('shop') }}"><span>有赏自营</span></a></li>
+            @if(!empty($categorys) && count($categorys) > 0)
+            @foreach($categorys as $ckey => $category)
+            <li><a  href="{{ Helper::route('category_view', $category['id']) }}"><span>{{ $category['name'] }}</span></a></li>
+            @endforeach
+            @endif
+        </ul>
+    </div>
+    <div class="js-product-scroll-container" data-action="/api/products" style="position: relative;top: -21px;" data-page="1" @if($store_products['last_page'] == 1) data-load-more='-1' @endif>
+        <ul class="clearfix product-list home-product-list js-product-list" style="padding: 0px 0px 5px 5px">
+            @include("shop.block.products",['products' => $store_products['data']])
+        </ul>
+        <div class="waiting-load-block js-load-block" style="display: none">
+            <div class="lds-css ng-scope"><div class="lds-rolling"><div></div></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="homescreen-template" value="1">
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{ Helper::asset_url('/media/scripts/view/shop.js') }}"></script>
+@endsection
+
+
+@section('copyright', view('template.copyright'))

@@ -1,0 +1,1 @@
+define([],function(){var t={eventGA:function(t,e){"undefined"!=typeof gtag&&gtag("event",t,e)},login:function(t){this.eventGA("login",{method:t})},sign_up:function(t){this.eventGA("sign_up",{method:t})},search:function(t){this.eventGA("search",{search_term:t})},add_to_wishlist:function(t){this.eventGA("add_to_wishlist",{event_label:t})}};return t});

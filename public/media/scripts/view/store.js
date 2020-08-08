@@ -1,0 +1,1 @@
+require(["zepto","base","mylayer","loginReg"],function(i,n,t,e){var o={};o.init=function(){this.addRecently()},o.addRecently=function(){var n=i("#store_id").val(),t=i("#is_viewd").val();n&&1==t&&i.ajaxPost("/store/viewed",{id:n},function(){})},"function"==typeof o.init&&i(function(){o.init()})});

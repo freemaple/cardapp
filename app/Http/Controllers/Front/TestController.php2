@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Http\Controllers\Front;
+
+use Illuminate\Http\Request;
+use Helper;
+
+use App\Libs\Service\OrderRechargeService;
+use EasyWeChat\Foundation\Application;
+
+use EasyWeChat\Payment\Order;
+use App\Models\Order\Recharge as OrderRecharge; 
+use App\Libs\Service\UserService;
+use App\Libs\Service\AuthService;
+use App\Libs\Service\WXService;
+use App\Models\User\User as UserModel;
+use App\Libraries\Storage\User as UserStorage;
+use App\Models\Theme\Background;
+
+
+class TestController extends BaseController
+{
+
+
+    /**
+     * 编辑
+     * @param  Request $request 
+     * @return string           
+     */
+    public function upload(Request $request){
+        /*
+        //当前密码
+        $result = [];
+        //检查文件上传
+        $file = $request->file('image');
+        if(!$file || !$file->isValid()){
+            $result['code'] = '0x0x0f';
+            $result['message'] = 'This is not a valid image.';
+            return json_encode($result);
+        }
+        $UserStorage = new UserStorage('background');
+        $filepath = $UserStorage->saveUpload($file);
+        $Background = new Background();
+        $Background->image = $filepath;
+        $Background->type = '1';
+        $Background->save();
+        $result['code'] = 'Success';
+        $result['message'] = '保存成功';
+        return response()->json($result);*/
+    }
+
+    /**
+     * 测试
+     *
+     * @return void
+    */
+    public function index(Application $app, Request $request)
+    {
+
+        $view = View('test.index', [
+            'title' => '上传',
+        ]);
+
+        return $view;
+
+        //$time_str = date('YmdHis');
+       // print($time_str);
+        //exit();
+        //$md5_str = uniqid();
+        //$x = $time_str . $md5_str;
+        //echo($time_str . $md5_str);
+        //echo " length:" . strlen($x);
+        //exit();
+
+        $r = OrderRechargeService::generateOrderNumber(1, 'V');
+
+        echo $r;
+
+        echo " length:" . strlen($r);
+
+        //dd(storage_path() . '/cert/apiclient_cert.pem');
+        /*$result = ['code' => ''];
+
+        $order_no = $request->order_no;
+
+        if($order_no != null){
+            $refundNo = 'Test' .md5(time());
+            $response = $app->payment->refund($order_no, $refundNo, 100, 100);
+            dd($response);
+        }
+        dd(1);
+        /*
+        $time_str = date('YmdHis');
+        $md5_str = md5(uniqid(). '1');
+        $number = $time_str .  substr($md5_str, 0, 10);
+        return $number;
+
+        $view = View('test.index', [
+            'title' => '上传',
+        ]);
+
+        return $view;
+
+
+
+        $user = \Auth::user();
+
+        WXService::registerMessage($user, $app);
+
+        return 'success';
+
+
+
+        $response = $app->payment->query('1901051605487b23b73cb3');
+        if ($response['return_code'] == 'SUCCESS' && $response['result_code'] == 'SUCCESS') {
+            if ($response['trade_state'] == 'SUCCESS') {
+                //如果需要加入后续支付成功步骤的话自己加
+                return $this->ok();
+            }else {
+                return $this->fail();
+            }
+        }else {
+            return $this->fail();
+        }
+        dump($r);
+        return '1';
+        /*$order_no = $request->order_no; 
+        $order = OrderRecharge::where('order_no', '=', $order_no)->first();
+        if (!$order) { // 如果订单不存在
+            return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+        }
+        if($order->status == '2'){
+            return true;
+        }
+        $pay_order = OrderRechargeService::vipOrderPay($order);
+
+        dump($pay_order);
+
+        return '1';*/
+        
+
+    }
+
+    /**
+     * order
+     *
+     * @return void
+    */
+    public function refund(Request $request, Application $app)
+    {
+        $result = ['code' => ''];
+
+        $order_no = $request->order_no;
+
+        if($order_no != null){
+            $refundNo = 'Test' .md5(time());
+            $response = $app->payment->refund($order_no, $refundNo, 1, 0.5, null, 'out_trade_no', 'REFUND_SOURCE_RECHARGE_FUNDS', '退款');
+            dd($response);
+        }
+    }
+}
