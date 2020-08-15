@@ -1,1 +1,0 @@
-define(["zepto","cache"],function(n,e){var i={init:function(){}};return i});

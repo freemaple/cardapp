@@ -1,1 +1,0 @@
-require(["zepto","base","mylayer","validate","scrollComponent"],function(l,t,i,n,o){var a={init:function(){var t=this,i=l(".js-wallet-records-list-box");o.init(),o.setScrollItem(i),o.setCallback(function(l,i){t.scrollLoadCallback(l,i)})},scrollLoadCallback:function(l,t){t.find(".js-wallet-records-list").append(l)}};"function"==typeof a.init&&l(function(){a.init()})});

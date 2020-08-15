@@ -1,1 +1,0 @@
-require(["zepto","base","mylayer"],function(n,o,l){var t={};t.init=function(){var o=n(".js-product-scroll-container");scrollComponent.init(),scrollComponent.setScrollItem(o),scrollComponent.setCallback(function(n,o){self.scrollLoadCallback(n,o)})},t.scrollLoadCallback=function(n,o){o.find(".js-product-list").append(n)},"function"==typeof t.init&&n(function(){t.init()})});
