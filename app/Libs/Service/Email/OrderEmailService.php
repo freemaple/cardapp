@@ -21,7 +21,7 @@ class OrderEmailService extends EmailService
 			$data = self::emailCommonData();
 			$data['order'] = $order_data;
 			$message = (new OrderPaid($data));
-			self::queue($message, $to, $cc);
+			self::send($message, $to, $cc);
 			return true;
 		} catch (\Exception $e){
 			\Log::info($e->getMessage());

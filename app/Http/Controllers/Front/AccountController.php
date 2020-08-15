@@ -274,7 +274,7 @@ class AccountController extends BaseController
         $user = Auth::user();
         $date = date('Y-m-d H:i:s');
         $vip_end_day = Helper::diffBetweenTwoDays($date, $user->vip_end_date);
-        $gifts = GiftModel::where('gift_type', 'vip')->where('enable', '1')->where('deleted', '!=', '1')->get();
+        $gifts = GiftModel::where('gift_type', 'vip')->where('enable', '1')->where('deleted', '!=', '1')->orderBy('id', 'desc')->get();
         foreach ($gifts as $key => $gift) {
             if($gift != null){
                 $product = ProductModel::where('id', $gift->product_id)->first();
