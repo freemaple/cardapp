@@ -16,7 +16,7 @@ class CategoryController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function view(Request $request, $id)
+    public function view(Request $request, $id = '')
     {
          if($id > 0){
             $category = ProductCategoryModel::where('id', '=', $id)->first();
