@@ -448,7 +448,7 @@ class ProductService
                     $ProductSkuModel->share_integral = $ProductSkuModel->price;
                 }
                 $ProductSkuModel->stock = $sku['stock'] > 0 ? $sku['stock'] : 0;
-                $image = isset($image_paths[$sku['image_file']]) ? $image_paths[$sku['image_file']] : '';
+                $image = isset($sku['image_file']) && isset($image_paths[$sku['image_file']]) ? $image_paths[$sku['image_file']] : '';
                 $ProductSkuModel->share_integral = $sku['share_integral'];
                 $ProductSkuModel->image = $image;
                 $ProductSkuModel->save();
