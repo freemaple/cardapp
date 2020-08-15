@@ -106,6 +106,10 @@ class OrderController extends BaseController
             $order->image = $order_product->image;
             $order->image = \HelperImage::storagePath($order->image);
             $order->shipinfo = $order->userinfo()->first();
+            $referrer_user_id = $user->referrer_user_id;
+            if(!empty($referrer_user_id)){
+                $order->referrer_user = UserModel::where('id', $referrer_user_id)->first();
+            }
         }
 
         $orders->appends($request->all());

@@ -46,7 +46,7 @@ class DocService
 
 
     public static function getDocCatalog(){
-        $DocCatalog = DocCatalog::where('enable', '1')->get();
+        $DocCatalog = DocCatalog::where('enable', '1')->orderBy('id', 'desc')->get();
         if($DocCatalog != null){
             $DocCatalog = $DocCatalog->toArray();
         }
