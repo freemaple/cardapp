@@ -19,13 +19,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         $user = Auth::user();
-        $url = $request->url();
         if (empty($user)) {
            if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['code' => 'UNAUTH', 'message' => '页面已过期，请重新登录!'], 200);
             } else {
                 \Session::set('login_redirect_link', \URL::full());
-                 $link = \Helper::route('auth_login', ['login']);
+                $link = \Helper::route('auth_login', ['login']);
                 return redirect($link);
             }
         }
