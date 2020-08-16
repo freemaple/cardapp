@@ -13,16 +13,22 @@ class PostController extends BaseController
 {
     public function getList(Request $request){
 
+        $user = Auth::user();
+
         $pageSize = 100;
         
         $posts = PostService::getUserPostList($request, $pageSize);
 
-        $user = Auth::user();
 
         $result = ['code' => 'Success',  'data' => []];
 
         if($request->request_type == 'app'){
             $result['data']['posts'] = $posts;
+            $result['data']['user'] = [
+                'id' =>  $user['id'],
+                'is_vip' =>  $user['is_vip'],
+                'level_status_value' =>  $user['level_status'],
+            ];
         } else {
             $view = view('account.post.block.list')->with('posts', $posts)->with('session_user', $user)->render();
             $result['view'] = $view;

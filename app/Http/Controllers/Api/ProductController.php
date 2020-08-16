@@ -94,9 +94,9 @@ class ProductController extends BaseController
             if($wish_product != null){
                 $is_wish = true;
             }
-            if($user->is_vip == '1'){
+            if(isset($goods_detail['max_share_integral']) && $goods_detail['max_share_integral'] > 0){
                 $goods_detail['share_text'] = '自购/分享挣￥' . 
-                $goods_detail['min_share_integral'] .  '~' . $goods_detail['max_share_integral'] . '红包';
+                $goods_detail['share_amount_min'] .  '~' . $goods_detail['share_amount_max'] . '红包';
             }
         }
 

@@ -24,7 +24,16 @@ class SiteController extends BaseController
         
         $banners = BannerCache::home();
 
-        $category = HomeCache::homecategory();
+        $categorys = HomeCache::homecategory();
+
+        $categorys = $categorys->toArray();
+
+        $all_category = [
+            'id' => 0,
+            'name' => '所有'
+        ];
+
+        array_unshift($categorys, $all_category);
 
         $products = HomeCache::shareProduct();
 
@@ -38,12 +47,16 @@ class SiteController extends BaseController
         $data = [
             'title' => "乐分享 让创业更简单！",
             'banners' => $banners,
-            'categorys' => $category,
+            'categorys' => $categorys,
             'menus' => $menus,
             'share_data' => $share_data,
             'products' => $products,
             'vip_gift_image' => Helper::asset_url('/media/images/vip_gift.jpg'),
+            'share_image' => Helper::asset_url('/media/images/share.png'),
+            'share_product' => !empty($products[0]) ? $products[0] : '',
             'titles' => [
+                'viewd_title' => '我的足迹',
+                'more_title' => '查看更多',
                 'list1' => '我的共享店铺',
                 'list2' => '热销精品'
             ]
@@ -128,10 +141,16 @@ class SiteController extends BaseController
      */
     public function homescreen(Request $request){
         $home_screen = NoticeCache::notice('home_screen');
-        $view = view('site.block.screen', ['home_screen' => $home_screen])->render();
         $result = ['code' => 'Success'];
-        $result['view'] = $view;
-        $result['data'] = [];
+        if($request->type == 'app'){
+            $result['data'] = $home_screen;
+            $result['data']['title'] = '有赏资讯';
+            $result['data']['confirmText'] = '朕知道了';
+            
+        } else {
+            $view = view('site.block.screen', ['home_screen' => $home_screen])->render();
+            $result['view'] = $view;
+        }
         return response()->json($result);
     }
 

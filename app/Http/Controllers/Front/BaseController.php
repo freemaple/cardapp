@@ -41,6 +41,17 @@ class BaseController extends Controller
     	//获取session用户
     	$this->middleware(function ($request, $next){
             $server = \Request::server();
+            if($request->pagetype){
+                $pagetype = $request->pagetype; 
+                \Session::set('pagetype', $request->pagetype);
+            } else {
+                $pagetype = \Session::get('pagetype');
+            }
+            if($pagetype == 'webview'){
+                view()->share('plus_webview', true);
+            } else {
+                view()->share('plus_webview', false);
+            }
     		$user = Auth::user();
     		view()->share('session_user', $user);
     		$this->_after($user);
