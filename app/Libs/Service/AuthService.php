@@ -165,12 +165,12 @@ class AuthService
         }
 
         //检查姓名是否存在
-        $fullname_user = static::$UserRepository->findUser([['fullname', '=', $data['fullname']]]);
+        /*$fullname_user = static::$UserRepository->findUser([['fullname', '=', $data['fullname']]]);
 		if($fullname_user != null){
 			$result['code'] = "2x3";
           	$result['message'] = "此姓名已被使用！";
           	return $result;
-		}
+		}*/
 
         //检查用户名是否存在
         $user_name_user = static::$UserRepository->findUser([['user_name', '=', $data['user_name']]]);
