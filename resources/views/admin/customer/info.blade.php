@@ -11,9 +11,10 @@
                 <thead>
                     <tr>
                         <th>会员id</th>
+                        <th>用户名</th>
                         <th>手机号码</th>
                         <th>姓名/昵称</th>
-                         <th>头像</th>
+                        <th>头像</th>
                         <th>微信号</th>
                         <th>微信二维码</th>
                         <th>性别</th>
@@ -27,6 +28,7 @@
                <tbody>
                   <tr>
                         <td>{{ $user->id }}</td>
+                        <td>{{ $user->user_name }}</td>
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->fullname ? $user->fullname : $user->nickname }}</td>
                         <td><a href="{{ HelperImage::getavatar($user->avatar) }}" target="_blank"><img src="{{ HelperImage::getavatar($user->avatar) }}" width="40"></a></td>
@@ -79,7 +81,14 @@
                         <td>@if(!empty($user->store)) <a href="{{ route('store_view', [$user->store['id']]) }}" target="_blank">{{ $user->store['name'] }}</a> @endif</td>
                         <td>{{ !empty($user->store) ? $store_level_list[$user->store_level] : '' }} </td>
                         <td>{{ $user->honor_value  }} : {{ $user->honor_vip_value  }}</td>
-                        <td>{{ $user->referrer_user['fullname'] or '' }}</td>
+                        <td>
+                            @if(!empty($user->referrer_user))
+                            <a href="/admin/customer/{{ $user->referrer_user['id'] }}" target="_blank">{{ $user->referrer_user['fullname'] or '' }}
+                           
+                            {{ $user->referrer_user['phone'] or '' }}
+                            </a>
+                            @endif
+                        </td>
                         <td>{{ $user->referrer_user_count  }}</td>
                         <td><a href="{{ route('admin_customer_integral', $user->id) }}" target="_blank">￥{{ !empty($user->integral_info) ?  $user->integral_info['point'] : 0 }}</a></td>
                         <td>￥{{ !empty($user->store_sales_points) ?  $user->integral_info['store_sales_points'] : 0 }}</td>

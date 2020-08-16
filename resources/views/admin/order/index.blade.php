@@ -64,6 +64,7 @@
                 <th>积分支付</th>
                 <th>付款金额</th>
                 <th>会员</th>
+                <th>会员推荐人</th>
                 <th>下单时间</th>
                 <th>订单状态</th>
                 <th>支付时间</th>
@@ -95,7 +96,12 @@
                             <td>￥{{ $order['order_total'] }}</td>
                             <td>￥{{ $order['order_integral'] }}</td>
                             <td>￥{{ $order['payment_amount'] }}</td>
-                            <td style="width: 80px">{{ $order['userinfo']['fullname'] or '' }}({{ $order['userinfo']['phone'] or '' }})</td>
+                            <td style="width: 80px"><a href="/admin/customer/{{ $order['userinfo']['id'] or '' }}" target="_blank">{{ $order['userinfo']['fullname'] or '' }}({{ $order['userinfo']['phone'] or '' }})</a></td>
+                            <td style="width: 80px">
+                                @if(!empty($order['referrer_user']))
+                                <a class="text-success" href="/admin/customer/{{ $order['referrer_user']['id'] or '' }}" target="_blank">{{ $order['referrer_user']['fullname'] or '' }}({{ $order['referrer_user']['phone'] or '' }})</a>
+                                @endif
+                            </td>
                             <td style="width: 80px">{{ $order['created_at'] }}</td>
                             <td>
                                 @if($order['order_status_code'] == 'shipping')
