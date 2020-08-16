@@ -53,7 +53,7 @@ class AccountController extends BaseController
             ],[
                 'text' => '3、礼包代购金',
             ],[
-                'text' => '4、金麦蕙资产',
+                'text' => '4、金麦穗资产',
             ],[
                 'text' => '5、分享/自购省',
             ]
@@ -704,10 +704,9 @@ class AccountController extends BaseController
                 'desc'=> '我的收藏',
                 'url'=> '/pages/account/collections'
             ],
-             [
-                'name'=> 'huoban',
-                'icon' => 'icon-dianpu',
-                'desc'=> '浏览记录',
+            ['name'=> 'wish',
+                'icon' => 'icon-love',
+                'desc'=> '我的足迹',
                 'url'=> '/pages/viewdhistory/index'
             ],
             [
@@ -756,6 +755,17 @@ class AccountController extends BaseController
             ]
         ];
 
+         //vip个数
+        $honor_value = UserModel::where('referrer_user_id', $user->id)
+        ->where('is_vip', '=', '1')
+        ->count();
+
+        //vip金个数
+        $honor_vip_value = UserModel::where('referrer_user_id', $user->id)
+        ->where('level_status', '>=', '2')
+        ->where('is_vip', '=', '1')
+        ->count();
+
         //邀请二维码
         $link_qrcode = $this->registerLinkQR(300);
 
@@ -790,15 +800,18 @@ class AccountController extends BaseController
             'nickname' => $user['nickname'],
             'weixin' => $user['weixin'],
             'created_at' => (String)$user->created_at,
+            'vip_end_date' => $user->vip_end_date,
             'vip_end_day' => $vip_end_day,
             'email' => $user['email'],
+            'honor_value' => $honor_value,
+            'honor_vip_value' => $honor_vip_value,
             'user_data' => $data,
             'avatar' => \HelperImage::getavatar($user['avatar']),
             'order_status_count' => $order_status_count,
             'level_status' => $level_status[$user['level_status']],
             'referrer_user_name' => $referrer_user_name,
             'gift_commission' => $gift_commission,
-            'manager_commission' => '￥' . $manager_commission,
+            'manager_commission' =>  $manager_commission,
             'manager_commission_text' => '稻田管理积分',
             'user_gold_amount' => $user_gold_amount,
             'sub_integral_amount' => $user->sub_integral_amount,
@@ -806,7 +819,11 @@ class AccountController extends BaseController
             'link_qrcode' => $link_qrcode,
             'today_task_status' => $today_task_status,
             'today_task_status_text' => $today_task_status_text,
-            'share_product_link' => $share_product_link
+            'share_product_link' => $share_product_link,
+            'task_step_tip' => '任务流程：（1）点击去完成（2）右上角【分享售卖】，分享到“微信朋友圈”（3）在朋友圈中，点开链接，浏览一次，即完成任务！ (4) 返回个人中心查看任务完成情况',
+            'task_tip' =>  '提示:分享保留至今晚24点生效！方可享受双重红利和每日赠送20代购积分！好友自购赚大红包，你也赚大红包！多卖多赚！加油哦！',
+            'share_sub_integral_amount' => config('user.user_ref_sub_integral_amount'),
+            'vip_gift_image' => \Helper::asset_url('/media/images/vip_gift.jpg')
         ];
         $result['code'] = 'Success';
         $result['message'] = '保存成功';
@@ -924,7 +941,8 @@ class AccountController extends BaseController
                     "honor_value" => $value['honor_value'],
                     "honor_vip_value" => $value['honor_vip_value'],
                     'vip_end_date' => $value['vip_end_date'],
-                    'rupgrade' => $value['rupgrade']
+                    'rupgrade' => $value['rupgrade'],
+                    'rupgrade_link' => '/pages/account/rupgrade?uid=' . $value['u_id']
                ];
             }
             $result['data'] = $referrers_list;
@@ -1258,6 +1276,10 @@ class AccountController extends BaseController
                 'avatar' => \HelperImage::getavatar($user['avatar']),
             ],
             'title' => '开通vip',
+            'pageInfo' => [
+                'vtitle' => '社群共享电商欢迎您',
+                'vtitle1' => ''
+            ],
             'vip_gift_image' => \Helper::asset_url('/media/images/vip_gift.jpg'),
             'vip_end_day' => $vip_end_day,
             'gifts' => $gifts

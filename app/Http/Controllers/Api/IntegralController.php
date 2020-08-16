@@ -44,6 +44,19 @@ class IntegralController extends BaseController
 
         $data['reward_out'] = $reward_out;
 
+        $max_sales_points = config('user.integral.max_sales_points');
+        $can_toreward = 0;
+        if($integral != null && $integral['store_sales_points'] >=  $max_sales_points){
+            $can_toreward = 1;
+        }
+
+        $data['max_sales_points'] = $max_sales_points;
+
+        $data['can_toreward'] = $can_toreward;
+
+        $data['store_sales_points'] = isset($integral['store_sales_points']) ? $integral['store_sales_points'] : '0';
+        $data['sales_points_toreward_tip'] = "店铺结算积分满￥$max_sales_points 才可转入余额";
+
         $result = ['code' => 'Success', 'data' => $data];
 
         return response()->json($result);

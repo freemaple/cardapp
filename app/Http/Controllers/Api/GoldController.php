@@ -29,7 +29,7 @@ class GoldController extends BaseController
         $result['data'] = [
             'user_info' => $user,
             'info' => $data,
-            'title' => '我的金麦蕙'
+            'title' => '我的金麦穗'
         ];
         return response()->json($result);
     }
