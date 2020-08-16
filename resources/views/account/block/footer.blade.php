@@ -1,3 +1,4 @@
+@if(!$plus_webview)
 <div class="mobile-footer">
     <ul class="foot-nav-info clearfix">
         <li><a href="{{ Helper::route('home') }}"><span class="iconfont icon-home"></span><div><span class="text">首页</span></div></a></li>
@@ -26,3 +27,4 @@
         <li><a href="{{ Helper::route('account_index') }}"><span class="iconfont icon-user"></span><div><span class="text">账户</span></div></a></li>
     </ul>
 </div>
+@endif

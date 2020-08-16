@@ -85,7 +85,7 @@
 </head>
 <body>
     <div id="wrap" class="wrap-container"> 
-        @yield('header', view('template.header'))
+        @if(!$plus_webview)@yield('header', view('template.header'))@endif
         <div class="wrap-content">
             @if(!empty(session('message')))
             <div class="site_msg_art msg_alert error show" style="position: fixed;top:50%;width: 100%;transform: translateY(-50%);max-width: 640px;z-index: 2">

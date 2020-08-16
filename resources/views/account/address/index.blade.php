@@ -47,6 +47,7 @@
         @endif
     </div>
     <script type="text/template" id="address-form-template">
+        @if(!$plus_webview)
         <div class="mobile-header clearfix">
             <div class="mobile-header-box clearfix">
                 <div class="mobile-header-back">
@@ -55,6 +56,7 @@
                 <div class="mobile-header-title">地址管理</div>
             </div>
         </div>
+        @endif
         <div class="address-form-box">
             <form class="shipping-address-form clearfix" name="shipping-address-form" onsubmit="return false">
                 <input type="hidden" name="id" value="">

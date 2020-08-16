@@ -180,6 +180,7 @@
 	        	<a class="operate-btn" href="{{ Helper::route('account_vipUpgrade') }}">抢礼包</a>
 	        @endif
         </div>
+        <div style="margin: 20px 0px;position: absolute;bottom: 10px;right: 10px"><a class="operate-btn" href="{{ Helper::route('help_school') }}">商学院</a></div>
     </div>
     @if(!$user->is_vip)
 	<div>
