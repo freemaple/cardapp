@@ -6,7 +6,7 @@
 	<div class="mobile-header clearfix">
 	    <div class="mobile-header-box clearfix">
 	        <div class="mobile-header-back">
-	            <a href="{{ Helper::route('account_orders') }}"><span class="iconfont icon-back"></span></a>
+	            <a href="javascript:void(0)" class="js-link-back"><span class="iconfont icon-back"></span></a>
 	        </div>
 	        <div class="mobile-header-title">订单号： {{ $order_detail['order_no'] or '' }} </div>
 	    </div>
@@ -184,10 +184,10 @@
                 	@endif
 		            @if($order_detail['order_status_code'] == 'finished')
 		           		<li>
-		           			<a href="{{ Helper::route('account_order_reviews_add', $order_detail['id']) }}" class="btn btn-primary" data-id="{{ $order_detail['id'] }}">评论</a>
+		           			<a href="{{ Helper::route('account_order_reviews_add', $order_detail['id']) }}" class="btn btn-primary" data-id="{{ $order_detail['id'] }}">评价</a>
 		           		</li>
 		            @endif
-		            @if(!Helper::isApp())
+		            @if(empty($plus_webview) || !$plus_webview)
 		            <li>
 		            	<a href="{{ Helper::route('account_orders') }}" class="btn btn-default">返回订单列表</a>
 		            </li>
