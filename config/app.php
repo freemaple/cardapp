@@ -235,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Helper' => App\Helper\Base::class,
         'HelperImage' => App\Helper\Image::class,
+        'HelperCurrency' => App\Helper\Currency::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
