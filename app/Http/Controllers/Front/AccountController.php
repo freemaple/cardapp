@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\BaseController;
 use App\Libs\Service\MessageService;
 use App\Libs\Service\UserService;
 use App\Libs\Service\CardService;
+use App\Libs\Service\PositionService;
 use App\Models\User\User as UserModel;
 use App\Models\User\VipPackage as VipPackageModel;
 use App\Models\Store\StorePackage as StorePackageModel;
@@ -208,13 +209,19 @@ class AccountController extends BaseController
     public function entry()
     {
         $user = Auth::user();
-        $vippackage = VipPackageModel::where('enable', '=', '1')->where('year', '=', '1')->first();
-        $store_package = StorePackageModel::where('enable', '=', '1')->first();
+        $provices = [];
+        $is_address = false;
+        $address_book = $user->address()->first();
+        if(empty($address_book)){
+            $provices = PositionService::provices();
+        } else {
+            $is_address = true;
+        }
         $view = view('account.entry',[
             'user' => $user,
             'title' => '开通vip',
-            'vippackage' => $vippackage,
-            'store_package' => $store_package
+            'provices' => $provices,
+            'is_address' => $is_address
         ]);
         return $view;
     }
