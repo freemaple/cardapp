@@ -100,6 +100,9 @@ class PayoutController extends BaseController
 
         foreach ($payoutApplys as $key => $value) {
             $payoutApplys[$key]['status_text'] = $payout_status[$payoutApplys[$key]['status']];
+            $payoutApplys[$key]['amount_text'] = \HelperCurrency::fixed($payoutApplys[$key]['amount']);
+            $payoutApplys[$key]['actual_amount_text'] = \HelperCurrency::fixed($payoutApplys[$key]['actual_amount']);
+
         }
 
         if($request->type == 'app'){
